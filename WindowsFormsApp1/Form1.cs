@@ -1,25 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Microsoft.Data.Sqlite;
+
+
 
 
 namespace knockSharp
@@ -32,8 +22,11 @@ namespace knockSharp
         }
         private void test_Load(object sender, EventArgs e)
         {
-            listView1.FullRowSelect = true;
-            listView1.MultiSelect   = false;
+
+            listView1.FullRowSelect = true; //выделение всей строки при нажатии на нее
+            listView1.MultiSelect   = false; //запрет на выделения нескольких строк
+
+            //чтение параметров из Settings.Default.SevedList
             var savedJSON           = Properties.Settings.Default.SevedList;
             if (savedJSON != "") { 
                 var list = JsonSerializer.Deserialize<List<String[]>>(savedJSON);
@@ -60,37 +53,38 @@ namespace knockSharp
            public String deskript;
         }
 
-        private void clear_imput_forms()
+        private void clear_imput_forms() //очитска полей ввода 
         {
             textBox_ip.Text         = "";
             textBox_ports.Text      = "";
             textBox_deskript.Text   = "";
+
         }
 
-        private bool chek_complet_imput_form()
+        private bool chek_complet_imput_form() // проверка корректных данных в полях ввода
         {
             string pattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 
-            if (textBox_ip.Text == "")
+            if (textBox_ip.Text == "")// если поле IP пустое 
             {
                 MessageBox.Show("Поле 'IP адрес' пустое", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 return false;
             }
             else 
             { 
-                if (!Regex.IsMatch(textBox_ip.Text, pattern))
+                if (!Regex.IsMatch(textBox_ip.Text, pattern)) // проверка ip на корректный ввод
                 {
                     MessageBox.Show("IP введен не верно", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                     return false;
                 }
             }
-            if (textBox_ports.Text == "") {
+            if (textBox_ports.Text == "") { // если поле Порт пустое
                 MessageBox.Show("Поле 'Порт' пустое", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 return false;
             }
             return true;
         }
-        private void add_list_addr(Data_addr data)
+        private void add_list_addr(Data_addr data) // Добавление запсей в таблицу
         {
             listView1.BeginUpdate(); // Блокирует перерисовку
             
@@ -102,7 +96,7 @@ namespace knockSharp
             listView1.EndUpdate(); // Восстанавливает перерисовку
         }
 
-        private bool knocking()
+        private bool knocking()// простукивание протов
         {
             
             String ip = textBox_ip.Text.Replace(" ", "");
@@ -121,7 +115,7 @@ namespace knockSharp
             return true;
         }
 
-        private void save_list()
+        private void save_list()// сохранение таблицы в Settings.Default.SevedList
         {
             dynamic cell    = null;
             dynamic row     = null;
@@ -144,16 +138,16 @@ namespace knockSharp
 
         }
 
-        private void remuve_select_item() 
+        private void remuve_select_item() //удаление выбьранных строк в таблице
         {
             for (int i = listView1.SelectedItems.Count - 1; i >= 0; i--)
             {
                 listView1.Items.Remove(listView1.SelectedItems[i]);
             }
         }
-        private void button_add_Click(object sender, EventArgs e)
+        private void button_add_Click(object sender, EventArgs e) // добавление занчений с полей в таблицу
         {
-            if (chek_complet_imput_form())
+            if (chek_complet_imput_form())// проверка валедации полей
             {
                 Data_addr data  = new Data_addr();
                 data.ip         = textBox_ip.Text;
@@ -166,7 +160,7 @@ namespace knockSharp
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button_send_knock_Click(object sender, EventArgs e)// кнопка запускающая простукивания портов
         {
             if (chek_complet_imput_form())
             {

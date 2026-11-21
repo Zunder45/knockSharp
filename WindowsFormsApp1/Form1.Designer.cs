@@ -39,7 +39,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_deskript = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.button_send_knock = new System.Windows.Forms.Button();
             this.textBox_ip = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -134,16 +134,17 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Описание";
             // 
-            // button2
+            // button_send_knock
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(12, 290);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(305, 47);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Отправить";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button_send_knock.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_send_knock.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button_send_knock.Location = new System.Drawing.Point(12, 290);
+            this.button_send_knock.Name = "button_send_knock";
+            this.button_send_knock.Size = new System.Drawing.Size(305, 47);
+            this.button_send_knock.TabIndex = 9;
+            this.button_send_knock.Text = "Отправить";
+            this.button_send_knock.UseVisualStyleBackColor = true;
+            this.button_send_knock.Click += new System.EventHandler(this.button_send_knock_Click);
             // 
             // textBox_ip
             // 
@@ -217,7 +218,7 @@
             this.ClientSize = new System.Drawing.Size(329, 341);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.textBox_ip);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button_send_knock);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox_deskript);
             this.Controls.Add(this.label2);
@@ -252,7 +253,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.TextBox textBox_deskript;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button_send_knock;
         private System.Windows.Forms.TextBox textBox_ip;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
